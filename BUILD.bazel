@@ -1,0 +1,20 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+  name = "headers",
+  hdrs = glob(["include/*.h"]),
+  includes = ["include"],
+  visibility = ["//visibility:public"]
+)
+
+cc_library(
+    name = "libpocketsphinx",
+    srcs = glob(["src/libpocketsphinx/*.c"]),
+    hdrs = glob(["src/libpocketsphinx/*.h"]),
+    includes = ["src/libpocketsphinx"],
+    deps = [
+      "headers", 
+      "@sphinxbase//:libsphinxbase"
+    ],
+    visibility = ["//visibility:public"]
+)
