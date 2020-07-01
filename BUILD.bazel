@@ -1,12 +1,21 @@
 package(default_visibility = ["//visibility:public"])
 
+cc_binary(
+  name = "continuous",
+  srcs = ["src/programs/continuous.c"],
+  deps = [
+    ":libpocketsphinx"
+  ]
+)
+
 cc_library(
   name = "headers",
   hdrs = glob(["include/*.h"]),
   includes = ["include"],
   visibility = ["//visibility:public"]
 )
-
+# bazel query "deps(libpocketsphinx)" | dot -Tsvg > ~/deps.png
+# bazel query "deps(libpocketsphinx)" > test.txt
 cc_library(
     name = "libpocketsphinx",
     srcs = glob(["src/libpocketsphinx/*.c"]),
@@ -14,7 +23,9 @@ cc_library(
     includes = ["src/libpocketsphinx"],
     deps = [
       "headers", 
-      "@sphinxbase//:libsphinxbase"
+      "@sphinxbase//:libsphinxad",
+      "@sphinxbase//:sphinxbase",
+      "@sphinxbase//:sphinx_fe",
     ],
     visibility = ["//visibility:public"]
 )
