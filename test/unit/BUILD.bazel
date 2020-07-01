@@ -1,0 +1,12 @@
+cc_binary(
+  name = "jsgf",
+  srcs = ["test_jsgf.c", "test_macros.h"],
+  data = [
+      "//:dictionary",
+      "//:model",
+      "//test:data"
+  ],
+  deps = [
+    "//:libpocketsphinx"
+  ]
+)

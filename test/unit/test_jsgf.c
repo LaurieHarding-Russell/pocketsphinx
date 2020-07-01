@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#include <sphinxbase/jsgf.h>
-#include <sphinxbase/fsg_model.h>
+#include "sphinxbase/jsgf.h"
+#include "sphinxbase/fsg_model.h"
 
 #include "pocketsphinx_internal.h"
 #include "fsg_search_internal.h"
@@ -24,12 +24,12 @@ main(int argc, char *argv[])
 
     TEST_ASSERT(config =
             cmd_ln_init(NULL, ps_args(), TRUE,
-                "-hmm", MODELDIR "/en-us/en-us",
-                "-dict", DATADIR "/turtle.dic",
+                "-hmm", "model/en-us/en-us",
+                "-dict", "test/data/turtle.dic",
                 "-samprate", "16000", NULL));
     TEST_ASSERT(ps = ps_init(config));
 
-    jsgf = jsgf_parse_file(DATADIR "/goforward.gram", NULL);
+    jsgf = jsgf_parse_file("test/data/goforward.gram", NULL);
     TEST_ASSERT(jsgf);
     rule = jsgf_get_rule(jsgf, "goforward.move2");
     TEST_ASSERT(rule);
@@ -38,7 +38,7 @@ main(int argc, char *argv[])
     fsg_model_write(fsg, stdout);
     ps_set_fsg(ps, "goforward.move2", fsg);
     ps_set_search(ps, "goforward.move2"); 
-    TEST_ASSERT(rawfh = fopen(DATADIR "/goforward.raw", "rb"));
+    TEST_ASSERT(rawfh = fopen("test/data/goforward.raw", "rb"));
     ps_decode_raw(ps, rawfh, -1);
     hyp = ps_get_hyp(ps, &score);
     prob = ps_get_prob(ps);
@@ -51,12 +51,12 @@ main(int argc, char *argv[])
 
     TEST_ASSERT(config =
             cmd_ln_init(NULL, ps_args(), TRUE,
-                "-hmm", MODELDIR "/en-us/en-us",
-                "-dict", DATADIR "/turtle.dic",
-                "-jsgf", DATADIR "/goforward.gram",
+                "-hmm", "model/en-us/en-us",
+                "-dict","test/data/turtle.dic",
+                "-jsgf", "test/data/goforward.gram",
                 "-samprate", "16000", NULL));
     TEST_ASSERT(ps = ps_init(config));
-    TEST_ASSERT(rawfh = fopen(DATADIR "/goforward.raw", "rb"));
+    TEST_ASSERT(rawfh = fopen("test/data/goforward.raw", "rb"));
     ps_decode_raw(ps, rawfh, -1);
     hyp = ps_get_hyp(ps, &score);
     prob = ps_get_prob(ps);
@@ -68,13 +68,13 @@ main(int argc, char *argv[])
 
     TEST_ASSERT(config =
             cmd_ln_init(NULL, ps_args(), TRUE,
-                "-hmm", MODELDIR "/en-us/en-us",
-                "-dict", DATADIR "/turtle.dic",
-                "-jsgf", DATADIR "/goforward.gram",
+                "-hmm", "model/en-us/en-us",
+                "-dict", "test/data/turtle.dic",
+                "-jsgf", "test/data/goforward.gram",
                 "-toprule", "goforward.move2",
                 "-samprate", "16000", NULL));
     TEST_ASSERT(ps = ps_init(config));
-    TEST_ASSERT(rawfh = fopen(DATADIR "/goforward.raw", "rb"));
+    TEST_ASSERT(rawfh = fopen("test/data/goforward.raw", "rb"));
     ps_decode_raw(ps, rawfh, -1);
     hyp = ps_get_hyp(ps, &score);
     prob = ps_get_prob(ps);
@@ -86,9 +86,9 @@ main(int argc, char *argv[])
 
     TEST_ASSERT(config =
             cmd_ln_init(NULL, ps_args(), TRUE,
-                "-hmm", MODELDIR "/en-us/en-us",
-                "-dict", DATADIR "/turtle.dic",
-                "-jsgf", DATADIR "/defective.gram",
+                "-hmm", "model/en-us/en-us",
+                "-dict", "test/data/turtle.dic",
+                "-jsgf", "test/data/defective.gram",
                 NULL));
     TEST_ASSERT(NULL == ps_init(config));
     cmd_ln_free_r(config);

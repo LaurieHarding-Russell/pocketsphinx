@@ -29,3 +29,20 @@ cc_library(
     ],
     visibility = ["//visibility:public"]
 )
+
+
+filegroup(
+  name = "dictionary",
+  srcs = [
+    "model/en-us/cmudict-en-us.dict"
+  ],
+  visibility = ["//visibility:public"]
+)
+
+filegroup(
+  name = "model",
+  srcs = glob([
+    "model/en-us/en-us/*"
+  ]),
+  visibility = ["//visibility:public"]
+)
